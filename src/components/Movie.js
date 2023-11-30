@@ -4,17 +4,18 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Movie = (props) => {
-  const { addToFavorites, setMovies } = props;
+  const { addToFavorites, setMovies, deleteFromFavorites} = props;
 
   const [movie, setMovie] = useState("");
 
   const { id } = useParams();
   const { push } = useHistory();
 
-  function favDelete(movieId){
+  function favDelete(){
     axios.delete(`http://localhost:9000/api/movies/${id}`)
     .then((res) => {
       setMovies(res.data);
+      deleteFromFavorites(id);
       push("/movies");
     })
     .catch((err) =>{
